@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="SemiColonWeb" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,900" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('vendor/css/bootstrap.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('vendor/css/style.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('vendor/css/dark.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('vendor/css/font-icons.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('vendor/css/animate.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('vendor/css/magnific-popup.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('vendor/css/components/bs-switches.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('vendor/css/responsive.css') }}" type="text/css" />
+    <meta name='viewport' content='initial-scale=1, viewport-fit=cover'>
+    <link rel="stylesheet" href="{{ asset('vendor/css/colors.php?color=582900') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('vendor/brokeos/css/fonts.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('vendor/brokeos/brokeos.css') }}" type="text/css" />
+    {% block stylesheet %}{% endblock %}
+    <link rel="icon" type="image/png" href="{{ asset('vendor/brokeos/img/Cafe30logo.ico') }}">
+    <link rel="shortcut icon" href="{{ asset('vendor/brokeos/img/Cafe30logo.ico') }}" type="image/x-icon">
+    <title>Café 3.0 | {% block title %}{% endblock %}</title>
+</head>
+<body class="stretched">
+<div id="wrapper" class="clearfix">
+    <div id="top-bar" class="transparent-topbar">
+        <div class="container clearfix">
+            <div class="col_half nobottommargin clearfix">
+                <div class="top-links">
+                    <ul>
+                        <li><a href="{{ path('apropos') }}">A propos</a></li>
+                    </ul>
+                </div>
+            </div>
+            {% if not app.user %}
+                <div class="col_half fright col_last clearfix nobottommargin">
+                    <div class="top-links">
+                        <ul>
+                            <li><a href="{{ path('security.register') }}">Inscription</a></li>
+                        </ul>
+                    </div>
+                </div>
+            {% else %}
+                <div class="col_half fright col_last clearfix nobottommargin">
+                    <div class="top-links">
+                        <ul>
+                            <li><a href="#">Connecté en tant que {{ app.user.username }}</a></li>
+                            <li><a href="{{ path('security.logout') }}">Déconnexion</a></li>
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <header id="header" class="transparent-header floating-header clearfix">
+        <div id="header-wrap">
+            <div class="container clearfix">
+                <div id="primary-menu-trigger"><i class="icon-reorder"></i></div>
+                <div id="logo">
+                    <a href="{{ path('home') }}" class="standard-logo" data-dark-logo="{{ asset('vendor/brokeos/img/Cafe30.png') }}"><img src="{{ asset('vendor/brokeos/img/Cafe30.png') }}" alt="50 nuances de bugs"></a>
+                    <a href="{{ path('home') }}" class="retina-logo" data-dark-logo="{{ asset('vendor/brokeos/img/Cafe30.png') }}"><img src="{{ asset('vendor/brokeos/img/Cafe30.png') }}" alt="50 nuances de bugs"></a>
+                </div>
+                <nav id="primary-menu" class="with-arrows">
+                    <ul>
+                        <li><a href="{{ path('home') }}"><div>Accueil</div></a></li>
+                        <li><a href="{{ path('pays') }}">Stats</a></li>
+                        {% if is_granted('ROLE_IMPORTATEUR') %}
+                            <li><a href="{{ path('importateur.commander') }}">Commander</a></li>
+                            <li><a href="{{ path('importateur.commandes') }}">Mes commandes</a></li>
+                        {% endif %}
+                        {% if is_granted('ROLE_EXPORTATEUR') %}
+                            <li><a href="{{ path('exportateur.commandes') }}">Mes commandes</a></li>
+                            <li><a href="{{ path('exportateur.stocks') }}">Mes stocks</a></li>
+                        {% endif %}
+                    </ul>
+                    {% if not app.user %}
+                        <a href="{{ path('security.login') }}" class="button button-rounded fright leftmargin-sm">Connexion</a>
+                    {% else %}
+
+                    {% endif %}
+                </nav>
+            </div>
+        </div>
+    </header>
+    <div class="clear"></div>
+    <section id="content">
+        <div class="content-wrap pt-0">
+            {% block body %}{% endblock %}
+        </div>
+    </section>
+    <footer id="footer" class="noborder bg-white">
+        <div id="copyrights">
+            <div class="container clearfix">
+                <div class="col_half">
+                    50 Nuances de Bugs
+                    <br>
+                    <a href="https://validator.w3.org/nu/?doc=https%3A%2F%2Fiut.brokeos.fr">Validation HTML/CSS</a>
+                </div>
+                <div class="col_half col_last tright">
+                    <div class="copyrights-menu copyright-links clearfix">
+                        Thomas Decourty | Natan Charpentier | Remy Gautron<br>Quentin Grellier | Alexandre Moreau | Mohamad Suhairi MD SUBHI
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+<div id="gotoTop" class="icon-angle-up"></div>
+<script src="{{ asset('vendor/js/jquery.js') }}"></script>
+<script src="{{ asset('vendor/js/plugins.js') }}"></script>
+<script src="{{ asset('vendor/js/functions.js') }}"></script>
+{% block javascript %}{% endblock %}
+</body>
+</html>

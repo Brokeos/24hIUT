@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('exporateur.stocks.del', {'id': coffee.id}) }}" onsubmit="return confirm('Voulez-vous vraiment supprimer ?');">
+    <input type="hidden" name="_method" value="DELETE">
+    <button class="btn btn-danger">Supprimer</button>
+</form>

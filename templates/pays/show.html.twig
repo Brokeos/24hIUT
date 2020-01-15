@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ country.name }}{% endblock %}
+
+{% block body %}
+    <div class="section nobg mt-4 mb-0 pb-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="http://flags.fmcdn.net/data/flags/w580/{{ country.flag | lower }}.png" alt="" class="img-thumbnail">
+                    <ul class="list-group">
+                        <li class="list-group-item"><strong>Capitale: </strong>{{ country.capital }}</li>
+                        <li class="list-group-item"><strong>Habitants: </strong>{{ country.inhabitants }}</li>
+                        <li class="list-group-item"><strong>Surface: </strong>{{ country.surface }} km²</li>
+                        <li class="list-group-item"><strong>Production: </strong>{{ country.coffeeQuantity }} tonnes</li>
+                    </ul>
+                </div>
+                <div class="col-md-8">
+                    <h3>{{ country.name }}</h3>
+                    <blockquote>
+                        <p>{{ country.description | raw }}</p>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editer stock{% endblock %}
+
+{% block body %}
+    <div class="section nobg mt-4 mb-0 pb-0">
+        <div class="container">
+        {{ include('stocks/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+        <a href="{{ path('exportateur.stocks') }}" class="btn btn-primary">Retour</a>
+
+        {{ include('stocks/_delete_form.html.twig') }}
+
+        </div>
+    </div>
+{% endblock %}

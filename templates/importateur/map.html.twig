@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Carte{% endblock %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ asset('vendor/css/jquery-jvectormap.css') }}">
+{% endblock %}
+
+{% block javascript %}
+    <script src="{{ asset('vendor/js/components/jquery-jvectormap-1.2.2.min.js') }}"></script>
+    <script src="{{ asset('vendor/js/components/jquery-jvectormap-world-mill-en.js') }}"></script>
+    <script>
+        $(function(){
+
+            var countries = {
+                {% for country in countries %}
+                    {{ country.flag }}: {{ country.coffees | length }},
+                {% endfor %}
+            };
+            var countriesToId = {
+                {% for country in countries %}
+                    {{ country.flag }}: {{ country.id }},
+                {% endfor %}
+            }
+           $('#world-map').vectorMap({
+                map              : 'world_mill_en',
+                backgroundColor  : 'transparent',
+                regionStyle      : {
+                  initial: {
+                    fill            : '#e4e4e4',
+                    'fill-opacity'  : 1,
+                    stroke          : 'none',
+                    'stroke-width'  : 0,
+                    'stroke-opacity': 1
+                  }
+                },
+                series: {
+                  regions: [
+                    {
+                      values           : countries,
+                      scale            : ['#8c2d00', '#2a1500'],
+                      normalizeFunction: 'polynomial'
+                    }
+                  ]
+                },
+                onRegionLabelShow: function (e, el, code) {
+                  if (typeof countries[code] != 'undefined')
+                    el.html(el.html() + ': ' + countries[code] + ' exportateur' + (countries[code] > 1 ? 's' : ''));
+                },
+                onRegionClick: function (event, code) {
+                    if (countriesToId[code] != null){
+                        window.location = "{{ url('importateur.map') }}" + "/" + countriesToId[code];
+                    }
+                },
+           });
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div class="section nobg mt-4 mb-0 pb-0">
+        <div class="container">
+            <div id="world-map" style="height: 1000px; width: 100%;"></div>
+        </div>
+    </div>
+{% endblock %}
+

@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commander{% endblock %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ asset('vendor/css/components/select2.min.css') }}" type="text/css" />
+{% endblock %}
+
+{% block javascript %}
+    <script src="{{ asset('vendor/js/components/select2.min.js') }}"></script>
+    <script >
+    $(function () {
+            $('.select2').select2();
+    });
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div class="section nobg mt-4 mb-0 pb-0">
+        <div class="container">
+            <form name="commande" method="post">
+                <div class="form-group">
+                    <label for="select_coffee" class="required">Café</label>
+                    <select class="form-control select2" style="width: 100%;" id="selected_coffee" name="selected_coffee">
+                        {% for coffee in coffees %}
+                            <option value="{{ coffee.id }}">{{ coffee.account }} | {{ coffee.coffeeType }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="commande_quantity" class="required">Quantité (tonnes)</label>
+                    <input type="number" id="commande_quantity" name="commande[quantity]" required="required" class="form-control" />
+                </div>
+                <button class="btn btn-success">Commander</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

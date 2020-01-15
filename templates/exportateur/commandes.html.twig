@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes commandes{% endblock %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ asset('vendor/css/components/bs-datatable.css') }}" type="text/css" />
+{% endblock %}
+
+{% block javascript %}
+<script src="{{ asset('vendor/js/components/bs-datatable.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+			$('#dt_commandes').DataTable({
+                'paging'      : true,
+                'lengthChange': true,
+                'searching'   : true,
+                'ordering'    : true,
+                'info'        : true,
+                'autoWidth'   : false,
+                'language': {
+                    processing:     "Traitement en cours...",
+                    search:         "Rechercher&nbsp;:",
+                    lengthMenu:    "Afficher _MENU_ &eacute;l&eacute;ments",
+                    info:           "Affichage de l'&eacute;lement _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+                    infoEmpty:      "Affichage de l'&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&eacute;ments",
+                    infoFiltered:   "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+                    infoPostFix:    "",
+                    loadingRecords: "Chargement en cours...",
+                    zeroRecords:    "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                    emptyTable:     "Aucune donnée disponible dans le tableau",
+                    paginate: {
+                        first:      "Premier",
+                        previous:   "Pr&eacute;c&eacute;dent",
+                        next:       "Suivant",
+                        last:       "Dernier"
+                    },
+                    aria: {
+                        sortAscending:  ": activer pour trier la colonne par ordre croissant",
+                        sortDescending: ": activer pour trier la colonne par ordre décroissant"
+                    }
+                }
+            });
+		});
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div class="section nobg mt-4 mb-0 pb-0">
+        <div class="container">
+            <ul class="nav nav-pills nav-fill">
+                <li class="nav-item"><a class="nav-link{% if enattente is defined %} active{% endif %}" href="{{ path('exportateur.commandes', {type: "enattente"}) }}">Non validées</a></li>
+                <li class="nav-item"><a class="nav-link{% if enpreparation is defined %} active{% endif %}" href="{{ path('exportateur.commandes', {type: "enpreparation"}) }}">En préparation</a></li>
+                <li class="nav-item"><a class="nav-link{% if enattenteexpe is defined %} active{% endif %}" href="{{ path('exportateur.commandes', {type: "enattenteexpe"}) }}" href="#">En attente d'expédition</a></li>
+            </ul>
+            <div class="line"></div>
+            <div class="table-responsive">
+                <table id="dt_commandes" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Pays</th>
+                        <th>Café</th>
+                        <th>Quantité</th>
+                        <th>Date</th>
+                        <th>Etat</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for commande in commandes %}
+                        <tr>
+                            <td>{{ commande.id }}</td>
+                            <td>{{ commande.country.name }}</td>
+                            <td>{{ commande.coffeeType }}</td>
+                            <td>{{ commande.quantity }}</td>
+                            <td>{{ commande.dateCommande | date("m/d/Y") }}</td>
+                            <td>{{ commande.etat | title }}</td>
+                            <td>
+                                {% block actions %}{% endblock %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div></div>
+{% endblock %}

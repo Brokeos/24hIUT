@@ -1,0 +1,6 @@
+{% extends 'exportateur/commandes.html.twig' %}
+
+{% block actions %}
+    <a href="{{ path('commande.action', {'commande': commande.id, 'action': 'valider'}) }}" class="btn btn-success btn-sm {% if commande.coffeeType.quantity < commande.quantity %}disabled{% endif %}">Valider</a>
+    <a href="{{ path('commande.action', {'commande': commande.id, 'action': 'refuser'}) }}" class="btn btn-danger btn-sm">Refuser</a>
+{% endblock %}
